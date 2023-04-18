@@ -5,6 +5,10 @@
     font-weight: normal;
 }
 
+.label-is-disabled {
+    color: darkgrey;
+}
+
 input[type="checkbox"] {
     margin-right: 10px;
 }

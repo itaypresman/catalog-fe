@@ -26,3 +26,12 @@ body {
     justify-content: center;
     align-items: center;
 }
+
+
+.btn-disabled {
+    background: #6c757d;
+}
+
+.btn-disabled:hover {
+    background: #6c757d;
+}

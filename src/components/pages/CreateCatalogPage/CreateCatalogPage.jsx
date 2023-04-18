@@ -45,7 +45,8 @@ function CatalogCreatePage() {
         navigate('/catalogs')
     };
 
-    console.log(name)
+    const isDisabledPrimary = CatalogStore.primaryVertical && (CatalogStore.primaryVertical !== vertical);
+
     return (
         <div className={'create-catalog'}>
             <h2>Create Catalog</h2>
@@ -58,7 +59,8 @@ function CatalogCreatePage() {
                     <SelectInput items={verticals} value={vertical} onChange={onVerticalChange}/>
                 </div>
                 <div className={'form-group'}>
-                    <CheckBox text={'Is Primary'} isChecked={isPrimary} onClick={onIsPrimaryClick}/>
+                    <CheckBox text={'Is Primary'} isChecked={isPrimary} onClick={onIsPrimaryClick}
+                              isDisabled={isDisabledPrimary}/>
                 </div>
                 <div className={'form-group'}>
                     <Button className={'btn btn-new'} text={'Save'} onClick={onSaveClick}/>

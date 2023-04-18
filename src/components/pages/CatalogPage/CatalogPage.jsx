@@ -32,7 +32,7 @@ function CatalogPage() {
     };
 
     const selectCatalog = (isChecked, id) => {
-        let selectedCatalogsCopy = JSON.parse(JSON.stringify(selectedCatalogs))
+        let selectedCatalogsCopy = JSON.parse(JSON.stringify(selectedCatalogs));
         if (isChecked) {
             selectedCatalogsCopy.push(id);
         } else {

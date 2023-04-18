@@ -19,6 +19,12 @@ class CatalogStore {
         });
     };
 
+    setCatalogs = catalogs => {
+        this.catalogs = catalogs;
+        const primaryVerticals = catalogs.filter(catalog => catalog.isPrimary);
+        this.primaryVertical = primaryVerticals?.[0]?.vertical || '';
+    };
+
     createCatalog = (name, vertical, isPrimary) => {
         const data = { name, vertical, isPrimary };
         const accessToken = Cookies.get('accessToken');
@@ -40,13 +46,17 @@ class CatalogStore {
             isPrimary
         };
 
-        Platform.put('/catalog/edit', data, config).then(response => {
-            for (const i in this.catalogs) {
-                if (this.catalogs[i].id === catalogId) {
-                    this.catalogs[i].isPrimary = isPrimary;
+        Platform.put('/catalog/edit', data, config).then(() => {
+            const catalogs = JSON.parse(JSON.stringify(this.catalogs));
+
+            for (const i in catalogs) {
+                if (catalogs[i].id === catalogId) {
+                    catalogs[i].isPrimary = isPrimary;
                     break;
                 }
             }
+
+            this.setCatalogs(catalogs);
         }).catch(() => {});
     };
 
@@ -59,7 +69,8 @@ class CatalogStore {
 
         Platform.post('/catalog/delete', data, config).then(res => {
             if (res.data.status === true) {
-                this.catalogs = this.catalogs.filter(catalog => !catalogIds.includes(catalog.id));
+                const catalogs = this.catalogs.filter(catalog => !catalogIds.includes(catalog.id));
+                this.setCatalogs(catalogs);
             }
         }).catch();
     };
@@ -72,7 +83,7 @@ class CatalogStore {
 
         Platform.get('/catalog/get', config).then(response => {
             if (response.data?.length) {
-                this.catalogs = response.data;
+                this.setCatalogs(response.data);
             }
         }).catch(() => {});
     };

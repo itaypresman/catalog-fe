@@ -12,12 +12,12 @@ function Row({id, name, vertical, isPrimary, onSelectClick}) {
     const btnText = isPrimary ? 'Remove Primary' : 'Set Primary';
     const className = isPrimary ? 'btn btn-delete' : 'btn btn-primary';
     const [isChecked, setIsChecked] = useState(false);
+    const isDisabled = CatalogStore.primaryVertical && (CatalogStore.primaryVertical !== vertical);
 
     const onCheckBoxClick = e => {
         onSelectClick(e.target.checked, id);
         setIsChecked(e.target.checked);
     };
-
 
     return (
         <tr>
@@ -25,7 +25,12 @@ function Row({id, name, vertical, isPrimary, onSelectClick}) {
             <td>{name}</td>
             <td>{vertical}</td>
             <td>
-                <Button className={className} onClick={onPrimaryClick} text={btnText} />
+                <Button
+                    className={className}
+                    onClick={onPrimaryClick}
+                    text={btnText}
+                    isDisabled={isDisabled}
+                />
             </td>
         </tr>
     );
