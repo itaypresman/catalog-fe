@@ -34,13 +34,3 @@ th {
 tbody tr:nth-child(even) {
     background-color: var(--form-bg-color);
 }
-
-td:first-child {
-    width: 50px;
-    text-align: center;
-}
-
-td:last-child {
-    width: 150px;
-    text-align: center;
-}

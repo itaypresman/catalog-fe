@@ -47,7 +47,6 @@ class AuthStore {
         Platform.post('/auth/login', data).then(response => {
             if (response.data.accessToken) {
                 this.accessToken = response.data.accessToken;
-                Cookies.set('accessToken', response.data.accessToken);
             }
         }).catch(() => {});
     };
@@ -61,7 +60,6 @@ class AuthStore {
         Platform.post('/auth/register', data).then(response => {
             if (response.data.accessToken) {
                 this.accessToken = response.data.accessToken;
-                Cookies.set('accessToken', response.data.accessToken);
             }
         }).catch(() => {});
     };
@@ -89,7 +87,6 @@ class AuthStore {
         Platform.get('/auth/token/refresh', config).then(response => {
             if (response.data.accessToken) {
                 this.accessToken = response.data.accessToken;
-                Cookies.set('accessToken', response.data.accessToken);
 
                 resend();
             }
