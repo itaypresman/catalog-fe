@@ -19,18 +19,14 @@ class CatalogStore {
         });
     };
 
-    createCatalog = () => {
-        const data = {
-            email: this.email,
-            password: this.password,
+    createCatalog = (name, vertical, isPrimary) => {
+        const data = { name, vertical, isPrimary };
+        const accessToken = Cookies.get('accessToken');
+        const config = {
+            headers: { 'Authorization': `Bearer ${accessToken}` }
         };
 
-        Platform.post('/auth/login', data).then(response => {
-            if (response.data.accessToken) {
-                this.accessToken = response.data.accessToken;
-                Cookies.set('accessToken', response.data.accessToken);
-            }
-        }).catch(() => {});
+        return Platform.post('/catalog/create', data, config);
     };
 
     editPrimary = (catalogId, isPrimary) => {
@@ -54,19 +50,18 @@ class CatalogStore {
         }).catch(() => {});
     };
 
-    deleteCatalogs = () => {
+    deleteCatalogs = (catalogIds) => {
+        const accessToken = Cookies.get('accessToken');
         const config = {
-            headers: { 'Authorization': `Bearer ${this.accessToken}` }
+            headers: { 'Authorization': `Bearer ${accessToken}` }
         };
+        const data = { catalogIds };
 
-        Platform.get('/auth/logout', config).then(() => {
-            Cookies.remove('accessToken');
-            this.accessToken = null;
-        }).catch((err) => {
-            if (err?.response?.data?.message === 'TokenExpiredError') {
-                this.refreshToken(this.logOut);
+        Platform.post('/catalog/delete', data, config).then(res => {
+            if (res.data.status === true) {
+                this.catalogs = this.catalogs.filter(catalog => !catalogIds.includes(catalog.id));
             }
-        });
+        }).catch();
     };
 
     getCatalogs = () => {

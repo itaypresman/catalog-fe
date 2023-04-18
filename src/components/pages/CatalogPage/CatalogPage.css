@@ -1,3 +1,17 @@
+.catalogs {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    padding: 20px;
+}
+
+.btn-container {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    width: 100%;
+}
+
 button.btn-new {
     background-color: #28a745;
     color: #fff;

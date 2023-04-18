@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React, {useEffect, useState} from 'react';
 import {observer} from 'mobx-react';
 import './CatalogPage.css';
 import CatalogTable from '@components/common/CatalogTable/CatalogTable.jsx';
@@ -10,7 +10,8 @@ import NoData from '@components/common/NoData/NoData.jsx';
 
 
 function CatalogPage() {
-    const navigate = useNavigate()
+    const navigate = useNavigate();
+    const [selectedCatalogs, setSelectedCatalogs] = useState([]);
 
     useEffect(() => {
         if (!AuthStore.accessToken) {
@@ -24,17 +25,39 @@ function CatalogPage() {
 
     const onLogOutClick = () => {
         AuthStore.logOut();
-    }
+    };
+
+    const onNewCatalogClick = () => {
+        navigate('/catalog/create')
+    };
+
+    const selectCatalog = (isChecked, id) => {
+        let selectedCatalogsCopy = JSON.parse(JSON.stringify(selectedCatalogs))
+        if (isChecked) {
+            selectedCatalogsCopy.push(id);
+        } else {
+            selectedCatalogsCopy = selectedCatalogsCopy.filter(catalogId => catalogId !== id);
+        }
+
+        setSelectedCatalogs(selectedCatalogsCopy);
+    };
+
+    const onDeleteCatalogClick = () => {
+        CatalogStore.deleteCatalogs(selectedCatalogs)
+    };
 
     return (
-        <div className="catalogs">
+        <div className={'catalogs'}>
             <h2>Catalogs</h2>
-            <Button className={'btn btn-new'} text={'New'}/>
-            <Button className={'btn btn-delete'} text={'Delete'}/>
-            <span onClick={onLogOutClick} className="logout">Logout</span>
+            <div className={'btn-container'}>
+                <Button className={'btn btn-new'} text={'New'} onClick={onNewCatalogClick}/>
+                <Button className={'btn btn-delete'} text={'Delete'} onClick={onDeleteCatalogClick}/>
+                <span onClick={onLogOutClick} className={'logout'}>Logout</span>
+            </div>
+
             {
                 CatalogStore.catalogs?.length
-                    ? <CatalogTable catalogs={CatalogStore.catalogs}/>
+                    ? <CatalogTable catalogs={CatalogStore.catalogs} onSelectClick={selectCatalog}/>
                     : <NoData/>
             }
         </div>

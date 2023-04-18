@@ -6,6 +6,7 @@ import RegisterPage from '@components/pages/RegisterPage/RegisterPage.jsx';
 import CatalogPage from '@components/pages/CatalogPage/CatalogPage.jsx';
 import RedirectIfLoggedIn from '@components/RedirectIfLoggedIn.jsx';
 import RedirectIfLoggedOut from '@components/RedirectIfLoggedOut.jsx';
+import CreateCatalogPage from '@components/pages/CreateCatalogPage/CreateCatalogPage.jsx';
 
 
 function Application() {
@@ -14,7 +15,8 @@ function Application() {
             <Routes>
                 <Route path={ '/' } exact={ true } element={ <RedirectIfLoggedIn><LoginPage/></RedirectIfLoggedIn> }/>
                 <Route path={ '/register' } exact={ true } element={ <RedirectIfLoggedIn><RegisterPage/></RedirectIfLoggedIn> }/>
-                <Route path={ '/catalogs' } element={ <RedirectIfLoggedOut><CatalogPage/> </RedirectIfLoggedOut>}/>
+                <Route path={ '/catalogs' } element={ <RedirectIfLoggedOut><CatalogPage/></RedirectIfLoggedOut>}/>
+                <Route path={ '/catalog/create' } element={ <RedirectIfLoggedOut><CreateCatalogPage/></RedirectIfLoggedOut>}/>
             </Routes>
         </React.Fragment>
     );
