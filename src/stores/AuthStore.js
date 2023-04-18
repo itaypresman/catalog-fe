@@ -1,5 +1,6 @@
 import { action, observable, makeObservable } from 'mobx';
 import Platform from '@lib/beApi.js';
+import Cookies from 'js-cookie';
 
 
 class AuthStore {
@@ -37,72 +38,60 @@ class AuthStore {
         this.accessToken = accessToken;
     };
 
-    logIn = searchText => {
+    logIn = () => {
         const data = {
             email: this.email,
             password: this.password,
         };
 
         Platform.post('/auth/login', data).then(response => {
-            if (response.status === 200) {
-                console.log(response);
+            if (response.data.accessToken) {
+                this.accessToken = response.data.accessToken;
+                Cookies.set('accessToken', response.data.accessToken);
             }
         }).catch(() => {});
     };
 
     signUp = () => {
-        const params = {
-            title: searchText,
+        const data = {
+            email: this.email,
+            password: this.password,
         };
 
-        Platform.get('/search', { params }).then(response => {
-            if ((response.status === 200) && !('error' in response.data)) {
-                this.results = response.data;
-                this.error = null;
-            } else if ((response.status === 200) && ('error' in response.data)) {
-                this.error = response.data.error;
-                this.results = [];
-            } else {
-                this.error = 'api_error';
-                this.results = [];
-            }
-        }).catch(() => {});;
-    };
-
-    logOut = filmId => {
-        const params = {
-            id: filmId,
-        };
-
-        Platform.get('/filmInfo', { params }).then(response => {
-            if ((response.status === 200) && !('error' in response.data)) {
-                this.currentFilm = response.data;
-                this.error = null;
-            } else if ((response.status === 200) && ('error' in response.data)) {
-                this.error = response.data.error;
-                this.currentFilm = null;
-            } else {
-                this.error = 'api_error';
-                this.currentFilm = null;
+        Platform.post('/auth/register', data).then(response => {
+            if (response.data.accessToken) {
+                this.accessToken = response.data.accessToken;
+                Cookies.set('accessToken', response.data.accessToken);
             }
         }).catch(() => {});
     };
 
-    refreshToken = filmId => {
-        const params = {
-            id: filmId,
+    logOut = () => {
+        const config = {
+            headers: { 'Authorization': `Bearer ${this.accessToken}` }
         };
 
-        Platform.get('/filmInfo', { params }).then(response => {
-            if ((response.status === 200) && !('error' in response.data)) {
-                this.currentFilm = response.data;
-                this.error = null;
-            } else if ((response.status === 200) && ('error' in response.data)) {
-                this.error = response.data.error;
-                this.currentFilm = null;
-            } else {
-                this.error = 'api_error';
-                this.currentFilm = null;
+        Platform.get('/auth/logout', config).then(() => {
+            Cookies.remove('accessToken');
+            this.accessToken = null;
+        }).catch((err) => {
+            if (err?.response?.data?.message === 'TokenExpiredError') {
+                this.refreshToken(this.logOut);
+            }
+        });
+    };
+
+    refreshToken = (resend) => {
+        const config = {
+            headers: { 'Authorization': `Bearer ${this.accessToken}` }
+        };
+
+        Platform.get('/auth/token/refresh', config).then(response => {
+            if (response.data.accessToken) {
+                this.accessToken = response.data.accessToken;
+                Cookies.set('accessToken', response.data.accessToken);
+
+                resend();
             }
         }).catch(() => {});
     };

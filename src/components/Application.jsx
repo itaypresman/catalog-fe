@@ -4,15 +4,17 @@ import './Application.css';
 import { Route, Routes } from 'react-router-dom';
 import RegisterPage from '@components/pages/RegisterPage/RegisterPage.jsx';
 import CatalogPage from '@components/pages/CatalogPage/CatalogPage.jsx';
+import RedirectIfLoggedIn from '@components/RedirectIfLoggedIn.jsx';
+import RedirectIfLoggedOut from '@components/RedirectIfLoggedOut.jsx';
 
 
 function Application() {
     return (
         <React.Fragment>
             <Routes>
-                <Route path={ '/' } exact={ true } element={ <LoginPage/> }/>
-                <Route path={ '/register' } exact={ true } element={ <RegisterPage/> }/>
-                <Route path={ '/catalogs' } element={ <CatalogPage/> }/>
+                <Route path={ '/' } exact={ true } element={ <RedirectIfLoggedIn><LoginPage/></RedirectIfLoggedIn> }/>
+                <Route path={ '/register' } exact={ true } element={ <RedirectIfLoggedIn><RegisterPage/></RedirectIfLoggedIn> }/>
+                <Route path={ '/catalogs' } element={ <RedirectIfLoggedOut><CatalogPage/> </RedirectIfLoggedOut>}/>
             </Routes>
         </React.Fragment>
     );

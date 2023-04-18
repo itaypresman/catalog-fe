@@ -15,7 +15,7 @@ function AuthForm({onEmailChange, onPasswordChange, onButtonClick, isLogin = tru
     return (
         <div className={'login-form-container'}>
             <h1>{headerText}</h1>
-            <form className={'login-form'}>
+            <form className={'login-form'} onSubmit={e => e.preventDefault()}>
                 <div className={'form-group'}>
                     <label htmlFor={'username'}>Email</label>
                     <TextInput onTextChange={ onEmailChange } placeholder={'Enter your email'} />
