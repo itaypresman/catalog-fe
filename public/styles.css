@@ -27,15 +27,6 @@ body {
     align-items: center;
 }
 
-
-.btn-disabled {
-    background: #6c757d;
-}
-
-.btn-disabled:hover {
-    background: #6c757d;
-}
-
 .catalogs {
     display: flex;
     flex-direction: column;
@@ -50,17 +41,26 @@ body {
     width: 100%;
 }
 
-button.btn-new {
+.btn-new {
     background-color: #28a745;
     color: #fff;
     margin-right: 10px;
 }
 
-button.btn-delete {
+.btn-delete {
     background-color: #dc3545;
     color: #fff;
     margin-right: 10px;
 }
+
+.btn-disabled {
+    background: #6c757d;
+}
+
+.btn-disabled:hover {
+    background: #6c757d;
+}
+
 
 .logout {
     color: var(--primary-color);

@@ -19,7 +19,7 @@ function CatalogPage() {
     }, [AuthStore.accessToken]);
 
     useEffect(() => {
-        CatalogStore.getCatalogs()
+        CatalogStore.getCatalogs();
     }, []);
 
     const onLogOutClick = () => {
@@ -42,15 +42,16 @@ function CatalogPage() {
     };
 
     const onDeleteCatalogClick = () => {
-        CatalogStore.deleteCatalogs(selectedCatalogs)
+        CatalogStore.deleteCatalogs(selectedCatalogs);
+        setSelectedCatalogs([]);
     };
 
     return (
         <div className={'catalogs'}>
             <h2>Catalogs</h2>
             <div className={'btn-container'}>
-                <Button className={'btn btn-new'} text={'New'} onClick={onNewCatalogClick}/>
-                <Button className={'btn btn-delete'} text={'Delete'} onClick={onDeleteCatalogClick}/>
+                <Button className={'btn-new'} text={'New'} onClick={onNewCatalogClick}/>
+                <Button className={'btn-delete'} text={'Delete'} onClick={onDeleteCatalogClick} isDisabled={!selectedCatalogs.length}/>
                 <span onClick={onLogOutClick} className={'logout'}>Logout</span>
             </div>
 
