@@ -47,8 +47,9 @@ class AuthStore {
         Platform.post('/auth/login', data).then(response => {
             if (response.data.accessToken) {
                 this.accessToken = response.data.accessToken;
+                this.error = null;
             }
-        }).catch(() => {});
+        }).catch(this.handleError);
     };
 
     signUp = () => {
@@ -60,8 +61,27 @@ class AuthStore {
         Platform.post('/auth/register', data).then(response => {
             if (response.data.accessToken) {
                 this.accessToken = response.data.accessToken;
+                this.error = null;
             }
-        }).catch(() => {});
+        }).catch(this.handleError);
+    };
+
+    handleError = err => {
+        if (Array.isArray(err.response?.data?.message)) {
+            const errors = err.response?.data?.message;
+            this.error = {};
+            for (const msg of errors) {
+                if (msg.includes('email')) {
+                    this.error.email = msg;
+                }
+
+                if (msg.includes('password')) {
+                    this.error.password = msg;
+                }
+            }
+        } else {
+            this.error = { password: err.response?.data?.message };
+        }
     };
 
     logOut = () => {

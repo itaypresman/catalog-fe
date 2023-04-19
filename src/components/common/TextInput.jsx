@@ -1,9 +1,10 @@
 import React from 'react';
 
 
-function TextInput({onTextChange, value, type = 'text', placeholder = ''}) {
+function TextInput({onTextChange, value, type = 'text', placeholder = '', isError = false}) {
+    const className = isError ? 'error' : '';
     return (
-        <input type={type} onChange={onTextChange} placeholder={placeholder} value={value} required/>
+        <input className={className} type={type} onChange={onTextChange} placeholder={placeholder} value={value} required/>
     );
 }
 
