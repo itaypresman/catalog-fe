@@ -80,7 +80,9 @@ class AuthStore {
                 }
             }
         } else {
-            this.error = { password: err.response?.data?.message };
+            const message = err.response?.data?.message;
+            const fieldName = message?.toLowerCase()?.includes('email') ?  'email' : 'password';
+            this.error = { [fieldName]: message };
         }
     };
 
@@ -92,7 +94,7 @@ class AuthStore {
         Platform.get('/auth/logout', config).then(() => {
             Cookies.remove('accessToken');
             this.accessToken = null;
-        }).catch((err) => {
+        }).catch(err => {
             if (err?.response?.data?.message === 'TokenExpiredError') {
                 this.refreshToken(this.logOut);
             }

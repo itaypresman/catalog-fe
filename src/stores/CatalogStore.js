@@ -1,6 +1,6 @@
 import { action, observable, makeObservable } from 'mobx';
 import Platform from '@lib/beApi.js';
-import Cookies from 'js-cookie';
+import AuthStore from '@stores/AuthStore';
 
 
 class CatalogStore {
@@ -27,18 +27,16 @@ class CatalogStore {
 
     createCatalog = (name, vertical, isPrimary) => {
         const data = { name, vertical, isPrimary };
-        const accessToken = Cookies.get('accessToken');
         const config = {
-            headers: { 'Authorization': `Bearer ${accessToken}` }
+            headers: { 'Authorization': `Bearer ${AuthStore.accessToken}` }
         };
 
         return Platform.post('/catalog/create', data, config);
     };
 
     editPrimary = (catalogId, isPrimary) => {
-        const accessToken = Cookies.get('accessToken');
         const config = {
-            headers: { 'Authorization': `Bearer ${accessToken}` }
+            headers: { 'Authorization': `Bearer ${AuthStore.accessToken}` }
         };
 
         const data = {
@@ -57,13 +55,16 @@ class CatalogStore {
             }
 
             this.setCatalogs(catalogs);
-        }).catch(() => {});
+        }).catch(err => {
+            if (err?.response?.data?.message === 'TokenExpiredError') {
+                AuthStore.refreshToken(this.editPrimary);
+            }
+        });
     };
 
     deleteCatalogs = (catalogIds) => {
-        const accessToken = Cookies.get('accessToken');
         const config = {
-            headers: { 'Authorization': `Bearer ${accessToken}` }
+            headers: { 'Authorization': `Bearer ${AuthStore.accessToken}` }
         };
         const data = { catalogIds };
 
@@ -72,19 +73,26 @@ class CatalogStore {
                 const catalogs = this.catalogs.filter(catalog => !catalogIds.includes(catalog.id));
                 this.setCatalogs(catalogs);
             }
-        }).catch();
+        }).catch(err => {
+            if (err?.response?.data?.message === 'TokenExpiredError') {
+                AuthStore.refreshToken(this.deleteCatalogs);
+            }
+        });
     };
 
     getCatalogs = () => {
-        const accessToken = Cookies.get('accessToken');
         const config = {
-            headers: { 'Authorization': `Bearer ${accessToken}` }
+            headers: { 'Authorization': `Bearer ${AuthStore.accessToken}` }
         };
 
         Platform.get('/catalog/get', config).then(response => {
             const catalogs = response.data || [];
             this.setCatalogs(catalogs);
-        }).catch(() => {});
+        }).catch(err => {
+            if (err?.response?.data?.message === 'TokenExpiredError') {
+                AuthStore.refreshToken(this.getCatalogs);
+            }
+        });
     };
 }
 
