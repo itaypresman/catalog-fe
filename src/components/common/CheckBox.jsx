@@ -1,5 +1,4 @@
 import React from 'react';
-import './CheckBox.css';
 
 
 function CheckBox({text, isChecked, onClick, isDisabled = false}) {

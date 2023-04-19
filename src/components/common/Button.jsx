@@ -1,5 +1,4 @@
 import React from 'react';
-import './Button.css';
 
 
 function Button({onClick, text, className = '', isDisabled = false}) {

@@ -1,11 +1,10 @@
 import React, {useState} from 'react';
-import './CreateCatalogPage.css';
-import TextInput from '@components/common/TextInput/TextInput.jsx';
-import SelectInput from '@components/common/SelectInput/SelectInput.jsx';
-import Button from '@components/common/Button/Button.jsx';
+import TextInput from '@components/common/TextInput';
+import Index from '@components/common/SelectInput';
+import Button from '@components/common/Button';
 import {useNavigate} from 'react-router-dom';
-import CatalogStore from '@stores/CatalogStore.js';
-import CheckBox from '@components/common/CheckBox/CheckBox.jsx';
+import CatalogStore from '@stores/CatalogStore';
+import CheckBox from '@components/common/CheckBox';
 
 
 function CatalogCreatePage() {
@@ -56,7 +55,7 @@ function CatalogCreatePage() {
                     <TextInput value={name} placeholder={'Name'} onTextChange={onNameEdit}/>
                 </div>
                 <div className={'form-group'}>
-                    <SelectInput items={verticals} value={vertical} onChange={onVerticalChange}/>
+                    <Index items={verticals} value={vertical} onChange={onVerticalChange}/>
                 </div>
                 <div className={'form-group'}>
                     <CheckBox text={'Is Primary'} isChecked={isPrimary} onClick={onIsPrimaryClick}

@@ -1,6 +1,5 @@
 import React from 'react';
-import './CatalogTable.css';
-import Row from '@components/common/CatalogTable/Row.jsx';
+import Row from '@components/common/CatalogTable/Row';
 
 
 function CatalogPage({ catalogs, onSelectClick }) {

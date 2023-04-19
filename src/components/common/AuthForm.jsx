@@ -1,9 +1,8 @@
 import React from 'react';
-import './AuthForm.css';
 import { observer } from 'mobx-react';
-import TextInput from '@components/common/TextInput/TextInput.jsx';
-import Button from "@components/common/Button/Button.jsx";
-import {Link} from "react-router-dom";
+import TextInput from '@components/common/TextInput';
+import Button from '@components/common/Button';
+import {Link} from 'react-router-dom';
 
 
 function AuthForm({onEmailChange, onPasswordChange, onButtonClick, isLogin = true }) {

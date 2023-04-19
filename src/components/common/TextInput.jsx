@@ -1,5 +1,4 @@
 import React from 'react';
-import './TextInput.css';
 
 
 function TextInput({onTextChange, value, type = 'text', placeholder = ''}) {

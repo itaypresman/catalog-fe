@@ -1,12 +1,11 @@
 import React from 'react';
-import LoginPage from './pages/LoginPage/LoginPage.jsx';
-import './Application.css';
+import LoginPage from './pages/LoginPage';
 import { Route, Routes } from 'react-router-dom';
-import RegisterPage from '@components/pages/RegisterPage/RegisterPage.jsx';
-import CatalogPage from '@components/pages/CatalogPage/CatalogPage.jsx';
-import RedirectIfLoggedIn from '@components/RedirectIfLoggedIn.jsx';
-import RedirectIfLoggedOut from '@components/RedirectIfLoggedOut.jsx';
-import CreateCatalogPage from '@components/pages/CreateCatalogPage/CreateCatalogPage.jsx';
+import RegisterPage from '@components/pages/RegisterPage';
+import CatalogPage from '@components/pages/CatalogPage';
+import RedirectIfLoggedIn from '@components/RedirectIfLoggedIn';
+import RedirectIfLoggedOut from '@components/RedirectIfLoggedOut';
+import CreateCatalogPage from '@components/pages/CreateCatalogPage';
 
 
 function Application() {

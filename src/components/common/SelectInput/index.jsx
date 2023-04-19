@@ -1,9 +1,8 @@
 import React from 'react';
-import './SelectInput.css';
-import Item from '@components/common/SelectInput/Item.jsx';
+import Item from '@components/common/SelectInput/Item';
 
 
-function SelectInput({items, value, onChange}) {
+function Index({items, value, onChange}) {
     const options = Object.keys(items).map(key => ({ name: items[key], value: key }));
     const selects = options.map((item, i) => <Item key={i} {...item} />);
 
@@ -15,4 +14,4 @@ function SelectInput({items, value, onChange}) {
 }
 
 
-export default SelectInput;
+export default Index;

@@ -1,5 +1,4 @@
 import React from 'react';
-import './NoData.css';
 
 
 function NoData() {

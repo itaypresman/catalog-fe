@@ -1,8 +1,7 @@
 import React, {useEffect} from 'react';
-import './RegisterPage.css';
 import AuthStore from '@stores/AuthStore';
 import { observer } from 'mobx-react';
-import AuthForm from '@components/common/AuthForm/AuthForm.jsx';
+import AuthForm from '@components/common/AuthForm';
 import {useNavigate} from 'react-router-dom';
 
 

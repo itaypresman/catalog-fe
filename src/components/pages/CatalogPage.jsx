@@ -1,12 +1,11 @@
 import React, {useEffect, useState} from 'react';
 import {observer} from 'mobx-react';
-import './CatalogPage.css';
-import CatalogTable from '@components/common/CatalogTable/CatalogTable.jsx';
-import Button from '@components/common/Button/Button.jsx';
-import AuthStore from '@stores/AuthStore.js';
+import CatalogTable from '@components/common/CatalogTable';
+import Button from '@components/common/Button';
+import AuthStore from '@stores/AuthStore';
 import {useNavigate} from 'react-router-dom';
-import CatalogStore from '@stores/CatalogStore.js';
-import NoData from '@components/common/NoData/NoData.jsx';
+import CatalogStore from '@stores/CatalogStore';
+import NoData from '@components/common/NoData';
 
 
 function CatalogPage() {

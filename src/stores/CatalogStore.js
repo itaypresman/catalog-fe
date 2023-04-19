@@ -82,9 +82,8 @@ class CatalogStore {
         };
 
         Platform.get('/catalog/get', config).then(response => {
-            if (response.data?.length) {
-                this.setCatalogs(response.data);
-            }
+            const catalogs = response.data || [];
+            this.setCatalogs(catalogs);
         }).catch(() => {});
     };
 }

@@ -39,10 +39,12 @@ const base_conf = {
     },
 
     resolve: {
+        extensions: ['.js', '.jsx'],
         alias: {
             '@lib': path.resolve(__dirname, '..', 'lib'),
             '@components': path.resolve(__dirname, '..', 'src', 'components'),
             '@stores': path.resolve(__dirname, '..', 'src', 'stores'),
+            '@public': path.resolve(__dirname, '..', 'public'),
         },
     },
 

@@ -1,7 +1,6 @@
 import React, {useState} from 'react';
-import './CatalogTable.css';
-import CatalogStore from '@stores/CatalogStore.js';
-import Button from '@components/common/Button/Button.jsx';
+import CatalogStore from '@stores/CatalogStore';
+import Button from '@components/common/Button';
 
 
 function Row({id, name, vertical, isPrimary, onSelectClick}) {
