@@ -2,8 +2,8 @@ const path = require('path');
 const Dotenv = require('dotenv-webpack');
 const HtmlWebPackPlugin = require('html-webpack-plugin');
 const { merge } = require('webpack-merge');
-const prod_conf = require('./prod');
-const dev_conf = require('./dev');
+const prodConf = require('./prod');
+const devConf = require('./dev');
 
 
 const base_conf = {
@@ -62,5 +62,5 @@ const base_conf = {
 };
 
 module.exports = process.env.mode === 'production'
-    ? merge(base_conf, prod_conf)
-    : merge(base_conf, dev_conf);
+    ? merge(base_conf, prodConf)
+    : merge(base_conf, devConf);

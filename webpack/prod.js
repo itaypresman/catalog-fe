@@ -1,4 +1,3 @@
 module.exports = {
-    // devtool: 'source-map',
-    devtool: 'eval',
+    devtool: 'source-map',
 };
